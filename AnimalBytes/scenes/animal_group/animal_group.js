@@ -12,31 +12,19 @@ import Table from '../../components/table/table.js';
 // Import Helpers
 import { getDate } from '../../helpers/date_parse.js';
 import { getPercent } from '../../helpers/calculation.js';
+import { generateRandomData } from '../../helpers/random.js';
 
 export default function AnimalGroupScreen({route, navigation}){
     const headers = [
         'ID',
         'Mood',
         'Probability',
-        'Recent Activity'
-    ]
-
-    const data = [
-        {
-            key: 1,
-            animal: "cow",
-            ourprediction: {
-                mood: "Upset",
-                probability: 0.9855110809727051,
-            },
-            probabilities: {
-                Angry: 0.42725679738108013,
-                Normal: 0.5872321216462146,
-                Upset: 0.9855110809727051,
-            },
-            time: "Sun Mar  1 03:24:12 2020",
-        },
+        'Recent Acitvity'
     ];
+
+    const {animal_name} = route.params;
+
+    const data = generateRandomData(animal_name);
 
     const formatAnimalRow = (item) => {
         let prob = getPercent(item.ourprediction.probability);
@@ -54,7 +42,6 @@ export default function AnimalGroupScreen({route, navigation}){
         navigation.navigate('AnimalSingle', {animal_data: item});
     }
     
-    const {animal_name} = route.params;
     return (
         <View style={styles.container}>
             <Header navigation={navigation} header_title={animal_name}/>

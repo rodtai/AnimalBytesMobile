@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import styles from './table_header-styles.js';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function TableHeader(props){
     return (

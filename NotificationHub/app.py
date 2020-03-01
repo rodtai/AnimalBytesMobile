@@ -68,8 +68,7 @@ def push_token():
     jsonData = request.get_json()
     token = jsonData['token']['value']
     user = jsonData['user']['username']
-    print(token)
-    print(user)
-    msg = "HEY WHATS UP " + user
+    msg = "Hey " + user + ", welcome to AnimalBytes!"
     send_push_message(token, msg)
     return 'Hello, World!'
+

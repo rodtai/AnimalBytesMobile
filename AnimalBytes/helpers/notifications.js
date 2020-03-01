@@ -3,7 +3,7 @@ import * as Permissions from 'expo-permissions';
 
 const PUSH_ENDPOINT = 'https://6c425754.ngrok.io/users/push-token';
 
-export default async function registerForPushNotificationsAsync() {
+export default async function registerForPushNotificationsAsync(user_firstname) {
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
   // only asks if permissions have not already been determined, because
   // iOS won't necessarily prompt the user a second time.
@@ -31,7 +31,7 @@ export default async function registerForPushNotificationsAsync() {
         value: token,
       },
       user: {
-        username: 'Brent',
+        username: user_firstname,
       },
     }),
   });

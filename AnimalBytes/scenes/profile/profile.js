@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './profile-styles.js';
 import {View, Text} from 'react-native';
 
@@ -13,11 +13,16 @@ import Pig from '../../assets/pighead.png';
 import Chicken from '../../assets/chickenhead.png';
 import Question_Mark from '../../assets/question_mark.png'
 
+import registerForPushNotificationsAsync from '../../helpers/notifications.js';
+
 export default function ProfileScreen({ route, navigation }) {
     const goToAnimalGroup = (animal_name) => () => {
         navigation.navigate('AnimalGroup', {animal_name: animal_name});
     };
     const {user} = route.params;
+    useEffect(() => {
+        registerForPushNotificationsAsync(user.givenName);
+    }, []);
     return (
         <View style={styles.container}>
             <Header header_title={'Profile'}/>
@@ -34,10 +39,10 @@ export default function ProfileScreen({ route, navigation }) {
             <View style={styles.rowgrid}>
                 <View style={styles.colgrid}>
                     <GrayCard img_source={Cow} img_width={91} img_height={114} text={"Cow"} navigateFunc={goToAnimalGroup}/>
-                    <GrayCard img_source={Pig} img_width={106} img_height={90} text={"Pig"}/>
+                    <GrayCard img_source={Pig} img_width={106} img_height={90} text={"Pig"} navigateFunc={goToAnimalGroup}/>
                 </View>
                 <View style={styles.colgrid}>
-                    <GrayCard img_source={Chicken} img_width={80} img_height={90} text={"Chicken"}/>
+                    <GrayCard img_source={Chicken} img_width={80} img_height={90} text={"Chicken"} navigateFunc={goToAnimalGroup}/>
                     <GrayCard img_source={Question_Mark} img_width={50} img_height={75} text={"Coming Soon"}/>
                 </View>
             </View>

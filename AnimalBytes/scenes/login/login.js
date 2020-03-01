@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 // Google Sign-In imports
 import * as Google from 'expo-google-app-auth';
-import {GOOGLE_API_KEY_Android, GOOGLE_API_KEY_iOS} from '../../helpers/secret.js';
+import {GOOGLE_API_KEY_Android, GOOGLE_API_KEY_iOS} from '../../secret.js';
 
 // RN Elements and Styles
 import { Image, Text, View, TouchableOpacity } from 'react-native';
@@ -14,28 +14,7 @@ import cow_img from '../../assets/cow.png';
 import pig_img from '../../assets/pig.png';
 import arrow_img from '../../assets/arrow.png';
 
-// Notifications
-import { Notifications } from 'expo';
-import registerForPushNotificationsAsync from '../../helpers/notifications.js';
-
-// Requests
-import { fetchPredictions } from '../../helpers/predictions.js';
-
 export default function LoginScreen({route, navigation}) {
-    const [notification, setNotification] = useState({})
-    useEffect(() => {
-        registerForPushNotificationsAsync();
-        fetchPredictions(1);
-    }, []); 
-
-    const handleNotification = (notif) => {
-        setNotification(notif);
-    }
-
-    Notifications.addListener(handleNotification)
-
-    
-    
     async function signIn() {
         try {
           const { type, accessToken, user } = await Google.logInAsync({
@@ -44,8 +23,8 @@ export default function LoginScreen({route, navigation}) {
             scopes: ["profile", "email"]
           });
           if (type === "success") {
-              console.log(user);
-              navigation.navigate('Profile', { user: user });
+            console.log(user);
+            navigation.navigate('Profile', { user: user });
           } else {
             console.log("cancelled")
           }
@@ -71,12 +50,6 @@ export default function LoginScreen({route, navigation}) {
             </Text>
             <Text style={styles.blurb}>
                 Join For Free.
-            </Text>
-            <Text>
-                {notification.origin}
-            </Text>
-            <Text>
-                {JSON.stringify(notification.data)}
             </Text>
             <TouchableOpacity
                 style={styles.sign_in_button}
